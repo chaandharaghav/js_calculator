@@ -24,16 +24,19 @@ section {
   width: 100vw;
 }
 
-#display {
-  height: 40%;
-
-  background-color: var(--grey);
-  color: hsl(0, 0%, 99%);
-
+#displaySection,
+#result {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-end;
+}
+
+#displaySection {
+  height: 40%;
+
+  background-color: var(--grey);
+  color: hsl(0, 0%, 99%);
 
   padding: 1rem;
 }
@@ -118,10 +121,26 @@ section {
     border: 4px solid black;
   }
 
-  #display {
+  #displaySection {
     border-bottom: 3px solid black;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
+  }
+
+  #display {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+
+    background-color: rgb(24, 24, 24);
+
+    padding-right: 1rem;
+
+    border-radius: 10px;
   }
 
   #inputPane {
