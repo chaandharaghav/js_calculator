@@ -1,3 +1,5 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=Teko:wght@500&display=swap");
 :root {
   --grey: #363636;
   --light-grey: #444444;
@@ -5,7 +7,16 @@
 
   --yellow: #ffb62c;
 
-  --cream: #ececec;
+  --cream: #b4b4b4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Teko", sans-serif;
+  font-weight: 600;
 }
 
 section {
@@ -14,9 +25,25 @@ section {
 }
 
 #display {
-  height: 30%;
+  height: 40%;
 
   background-color: var(--grey);
+  color: hsl(0, 0%, 99%);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+
+  padding: 1rem;
+}
+
+#expression {
+  font-size: 3rem;
+}
+
+#result {
+  font-size: 9rem;
 }
 
 #inputPane div {
@@ -32,10 +59,12 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  box-shadow: 1px 1px 0px 0px rgba(0, 0, 0, 0.74);
 }
 
 #inputPane {
-  height: 65%;
+  height: 60%;
 
   background-color: var(--light-grey);
 
@@ -45,6 +74,8 @@ section {
   grid-template-columns: repeat(4, 1fr);
 
   padding: 10px;
+
+  font-size: 2rem;
 }
 
 #numberPane div {
@@ -66,4 +97,35 @@ section {
 
 #equals {
   grid-row: 4/6;
+}
+
+@media (min-width: 800px) {
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100vh;
+
+    background-color: rgb(94, 94, 94);
+  }
+
+  section {
+    width: 40%;
+    height: 70%;
+
+    border-radius: 15px;
+    border: 4px solid black;
+  }
+
+  #display {
+    border-bottom: 3px solid black;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+  }
+
+  #inputPane {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
 }
