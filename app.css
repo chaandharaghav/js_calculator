@@ -2,13 +2,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Teko:wght@500&display=swap");
 :root {
   --grey: #363636;
-  --light-grey: #444444;
+  --light-grey: #454545;
   --dark-grey: hsl(0, 0%, 20%);
 
   --yellow: #ffb62c;
 
   --cream: #b4b4b4;
 }
+
+/* General styles */
 
 * {
   box-sizing: border-box;
@@ -17,12 +19,22 @@
 body {
   font-family: "Teko", sans-serif;
   font-weight: 600;
+
+  /* disabling user selection */
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -khtml-user-select: none;
+  user-select: none;
 }
 
 section {
   height: 100vh;
   width: 100vw;
 }
+
+/* Display section styles */
 
 #displaySection,
 #result {
@@ -49,6 +61,8 @@ section {
   font-size: 9rem;
 }
 
+/* Input pane styles */
+
 #inputPane div {
   border-radius: 10px;
 }
@@ -64,6 +78,12 @@ section {
   align-items: center;
 
   box-shadow: 1px 1px 0px 0px rgba(0, 0, 0, 0.74);
+
+  transition: transform 0.1s;
+}
+
+.clicked {
+  transform: scale(0.9);
 }
 
 #inputPane {
@@ -101,6 +121,8 @@ section {
 #equals {
   grid-row: 4/6;
 }
+
+/* Media queries */
 
 @media (min-width: 800px) {
   body {
@@ -141,6 +163,10 @@ section {
     padding-right: 1rem;
 
     border-radius: 10px;
+  }
+
+  #inputPane div:not(#numberPane):hover {
+    background-color: hsl(0, 0%, 17%);
   }
 
   #inputPane {
