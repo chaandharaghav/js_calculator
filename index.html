@@ -12,36 +12,34 @@
     <section>
       <div id="displaySection">
         <div id="display">
-          <div id="expression">10+20+30=</div>
-          <div id="result">60</div>
+          <div id="expression"></div>
+          <div id="result"></div>
         </div>
       </div>
       <div id="inputPane">
         <div id="clear">C</div>
-        <div id="divide">/</div>
-        <div id="multiply">X</div>
+        <div data-value="/" id="divide" class="operators">/</div>
+        <div data-value="*" id="multiply" class="operators">X</div>
         <div id="backspace">del</div>
-        <div id="subtract">-</div>
-        <div id="add">+</div>
-        <div id="equals">=</div>
+        <div data-value="-" id="subtract" class="operators">-</div>
+        <div data-value="+" id="add" class="operators">+</div>
+        <div data-value="=" id="equals">=</div>
         <div id="numberPane">
-          <div class="numbers">1</div>
-          <div class="numbers">2</div>
-          <div class="numbers">3</div>
-          <div class="numbers">4</div>
-          <div class="numbers">5</div>
-          <div class="numbers">6</div>
-          <div class="numbers">7</div>
-          <div class="numbers">8</div>
-          <div class="numbers">9</div>
-          <div id="percent">%</div>
-          <div class="numbers">0</div>
-          <div id="dot">.</div>
+          <div data-value="1" class="numbers">1</div>
+          <div data-value="2" class="numbers">2</div>
+          <div data-value="3" class="numbers">3</div>
+          <div data-value="4" class="numbers">4</div>
+          <div data-value="5" class="numbers">5</div>
+          <div data-value="6" class="numbers">6</div>
+          <div data-value="7" class="numbers">7</div>
+          <div data-value="8" class="numbers">8</div>
+          <div data-value="9" class="numbers">9</div>
+          <div data-value="%" id="percent" class="operators">%</div>
+          <div data-value="0" class="numbers">0</div>
+          <div data-value="." id="dot">.</div>
         </div>
       </div>
     </section>
     <script src="app.js"></script>
-    <!-- Audios -->
-    <audio src="click.wav"></audio>
   </body>
 </html>
