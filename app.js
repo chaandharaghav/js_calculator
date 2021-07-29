@@ -214,6 +214,9 @@ const findResult = function (first, second, current) {
   let result = 0;
 
   first = parseFloat(first);
+  if (second.includes("*")) {
+    second = second.replace("*", "");
+  }
   second = parseFloat(second);
   switch (userExpression[current]) {
     case "%":
@@ -250,7 +253,7 @@ const evaluate = function () {
 
     userExpression = userExpression.replace(
       `${first}${userExpression[current]}${second}`,
-      `${findResult(first, second, current)}`
+      `${Math.round(findResult(first, second, current) * 1000000) / 1000000}`
     );
   }
 };
