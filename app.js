@@ -29,39 +29,29 @@ const operatorValues = [...operators].map((number) => number.dataset.value);
 // numbers + operators
 const inputs = [...numbers, ...operators];
 
-const calculator = {
-  expression: "",
-};
+let userExpression = "0";
 
+let twoOperatorsPresent = false;
 const changeDisplay = function (input) {
-  const lastIndex = calculator.expression.length - 1;
-  const lastElement = calculator.expression[lastIndex];
+  const currentIndex = userExpression.length - 1;
+  const currentValue = userExpression[currentIndex];
 
-  // first operator can only be negative sign or decimal point
-  if (lastIndex === -1) {
-    if (operatorValues.includes(input) && input !== "-") {
+  // if a number or minus comes as first input, replace userExpression with it
+  if (currentIndex === 0 && currentValue === "0") {
+    if (numberValues.includes(input) || input === "-") {
+      userExpression = "";
+    }
+  }
+
+  // if a minus comes after multiplication or division, allow
+  if (operatorValues.includes(currentValue) && operatorValues.includes(input)) {
+    if (!((currentValue === "*" || currentValue === "/") && input === "-")) {
       return "";
     }
   }
 
-  // an operator is not allowed if - is input previously
-  if (lastIndex === 0) {
-    if (
-      operatorValues.includes(input) &&
-      calculator.expression[lastIndex - 1] === "-"
-    ) {
-      return "";
-    }
-  }
-
-  // if incoming value and last given input are both operators, remove
-  // last given operator
-  if (operatorValues.includes(lastElement) && operatorValues.includes(input)) {
-    calculator.expression = calculator.expression.substring(0, lastIndex);
-  }
-
-  calculator.expression += input;
-  expression.innerText = calculator.expression;
+  userExpression += input;
+  expression.innerText = userExpression;
 };
 
 const expression = document.querySelector("#expression");
