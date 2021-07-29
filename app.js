@@ -36,13 +36,25 @@ let userExpression = "0";
 
 const findPrevOperator = function (index) {
   index = index ?? userExpression.length - 1;
-  console.log(index);
   for (let i = index - 1; i > -1; i--) {
     if (operatorValues.includes(userExpression[i])) {
       return i;
     }
   }
   return 0;
+};
+
+const prevDotExists = function () {
+  for (
+    let i = userExpression.length;
+    i > findPrevOperator(userExpression.length);
+    i--
+  ) {
+    if (userExpression[i] === ".") {
+      return true;
+    }
+  }
+  return false;
 };
 
 let twoOperatorsPresent = false;
@@ -79,6 +91,12 @@ const changeDisplay = function (input) {
   // if a number/dot comes after percent, automatically add multiplication
   if (currentValue === "%" && [...numberValues, "."].includes(input)) {
     userExpression += "*";
+  }
+
+  // if previous dot exists, don't allow another
+
+  if (prevDotExists() && input === ".") {
+    return "";
   }
 
   userExpression += input;
