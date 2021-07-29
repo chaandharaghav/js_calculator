@@ -127,6 +127,25 @@ inputs.forEach((input) =>
   })
 );
 
+// clear function
+const clear = function () {
+  result.innerText = "";
+  expression.innerText = "0";
+  userExpression = "0";
+};
+
+const clearBtn = document.querySelector("#clear");
+clearBtn.addEventListener("click", clear);
+
+//backspace function
+const del = function () {
+  expression.innerText = userExpression.slice(0, userExpression.length - 1);
+  userExpression = expression.innerText;
+};
+
+const delBtn = document.querySelector("#backspace");
+delBtn.addEventListener("click", del);
+
 // find all operators not followed by a minus sign
 const findAllOperators = function () {
   let operators = [];
@@ -155,7 +174,6 @@ const orderOperators = function (operators) {
   operators.sort(function (a, b) {
     return operatorPrivilages[a] - operatorPrivilages[b];
   });
-  console.log(operators);
   return operators;
 };
 
@@ -179,34 +197,67 @@ const findSecondInput = function (index) {
   return userExpression.slice(index + 1, nextOperator);
 };
 
+const divide = function (a, b) {
+  return a / b;
+};
+const multiply = function (a, b) {
+  return a * b;
+};
+const subtract = function (a, b) {
+  return a - b;
+};
+const add = function (a, b) {
+  return a + b;
+};
+
+const findResult = function (first, second, current) {
+  let result = 0;
+
+  first = parseFloat(first);
+  second = parseFloat(second);
+  switch (userExpression[current]) {
+    case "%":
+      result = multiply(first / 100, second);
+      break;
+    case "/":
+      result = divide(first, second);
+      break;
+    case "*":
+      result = multiply(first, second);
+      break;
+    case "+":
+      result = add(first, second);
+      break;
+    case "-":
+      result = subtract(first, second);
+      break;
+  }
+  return result;
+};
+
 const evaluate = function () {
   const allOperators = findAllOperators();
-  console.log(allOperators);
   const orderedOperators = orderOperators(allOperators);
 
   for (let operator of orderedOperators) {
-    const current = userExpression.indexOf(operator);
+    const current = userExpression.lastIndexOf(operator);
     let first = findFirstInput(current);
     let second = findSecondInput(current);
-    console.log(first, second);
+
+    console.log(`${first}${userExpression[current]}${second}`);
+
+    console.log("Result: " + findResult(first, second, current));
+
+    userExpression = userExpression.replace(
+      `${first}${userExpression[current]}${second}`,
+      `${findResult(first, second, current)}`
+    );
   }
 };
 
-// clear function
-const clear = function () {
-  result.innerText = "";
-  expression.innerText = "0";
-  userExpression = "0";
-};
+const equals = document.querySelector("#equals");
 
-const clearBtn = document.querySelector("#clear");
-clearBtn.addEventListener("click", clear);
-
-//backspace function
-const del = function () {
-  expression.innerText = userExpression.slice(0, userExpression.length - 1);
-  userExpression = expression.innerText;
-};
-
-const delBtn = document.querySelector("#backspace");
-delBtn.addEventListener("click", del);
+equals.addEventListener("click", function () {
+  evaluate();
+  result.innerText = userExpression;
+});
