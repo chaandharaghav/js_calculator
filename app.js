@@ -46,6 +46,18 @@ const findPrevOperator = function (index) {
   }
   return 0;
 };
+const findNextOperator = function (index) {
+  index = index ?? 0;
+  for (let i = index + 1; i < userExpression.length - 1; i++) {
+    if (
+      operatorValues.includes(userExpression[i]) &&
+      !operatorValues.includes(userExpression[i - 1])
+    ) {
+      return i;
+    }
+  }
+  return userExpression.length;
+};
 
 const prevDotExists = function () {
   for (
@@ -114,6 +126,7 @@ inputs.forEach((input) =>
   })
 );
 
+// find all operators not followed by a minus sign
 const findAllOperators = function () {
   let operators = [];
   for (let i = 1; i < userExpression.length - 1; i++) {
@@ -136,6 +149,7 @@ const operatorPrivilages = {
   "-": 5,
 };
 
+// order operators based on their priorities
 const orderOperators = function (operators) {
   operators.sort(function (a, b) {
     return operatorPrivilages[a] - operatorPrivilages[b];
@@ -144,8 +158,33 @@ const orderOperators = function (operators) {
   return operators;
 };
 
+// returns first number
+const findFirstInput = function (index) {
+  let prevOperator = findPrevOperator(index);
+  if (prevOperator !== 0) {
+    prevOperator++;
+  }
+  return userExpression.slice(prevOperator, index);
+};
+
+// returns second number
+const findSecondInput = function (index) {
+  let nextOperator = findNextOperator(index);
+  if (nextOperator === userExpression.length) {
+    nextOperator--;
+  }
+  return userExpression.slice(index + 1, nextOperator);
+};
+
 const evaluate = function () {
   const allOperators = findAllOperators();
   console.log(allOperators);
   const orderedOperators = orderOperators(allOperators);
+
+  for (let operator of orderedOperators) {
+    const current = userExpression.indexOf(operator);
+    let first = findFirstInput(current);
+    let second = findSecondInput(current);
+    console.log(first, second);
+  }
 };
