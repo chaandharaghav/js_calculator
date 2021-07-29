@@ -37,7 +37,10 @@ let userExpression = "0";
 const findPrevOperator = function (index) {
   index = index ?? userExpression.length - 1;
   for (let i = index - 1; i > -1; i--) {
-    if (operatorValues.includes(userExpression[i])) {
+    if (
+      operatorValues.includes(userExpression[i]) &&
+      !operatorValues.includes(userExpression[i - 1])
+    ) {
       return i;
     }
   }
@@ -110,3 +113,39 @@ inputs.forEach((input) =>
     changeDisplay(input.dataset.value);
   })
 );
+
+const findAllOperators = function () {
+  let operators = [];
+  for (let i = 1; i < userExpression.length - 1; i++) {
+    let currentElement = userExpression[i];
+    if (
+      operatorValues.includes(currentElement) &&
+      !operatorValues.includes(userExpression[i - 1])
+    ) {
+      operators.push(currentElement);
+    }
+  }
+  return operators;
+};
+
+const operatorPrivilages = {
+  "%": 1,
+  "/": 2,
+  "*": 3,
+  "+": 4,
+  "-": 5,
+};
+
+const orderOperators = function (operators) {
+  operators.sort(function (a, b) {
+    return operatorPrivilages[a] - operatorPrivilages[b];
+  });
+  console.log(operators);
+  return operators;
+};
+
+const evaluate = function () {
+  const allOperators = findAllOperators();
+  console.log(allOperators);
+  const orderedOperators = orderOperators(allOperators);
+};
