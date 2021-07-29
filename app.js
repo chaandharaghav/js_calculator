@@ -119,6 +119,7 @@ const changeDisplay = function (input) {
 };
 
 const expression = document.querySelector("#expression");
+const result = document.querySelector("#result");
 
 inputs.forEach((input) =>
   input.addEventListener("click", function () {
@@ -171,7 +172,9 @@ const findFirstInput = function (index) {
 const findSecondInput = function (index) {
   let nextOperator = findNextOperator(index);
   if (nextOperator === userExpression.length) {
-    nextOperator--;
+    if (operatorValues.includes(userExpression[userExpression.length - 1])) {
+      nextOperator--;
+    }
   }
   return userExpression.slice(index + 1, nextOperator);
 };
@@ -188,3 +191,22 @@ const evaluate = function () {
     console.log(first, second);
   }
 };
+
+// clear function
+const clear = function () {
+  result.innerText = "";
+  expression.innerText = "0";
+  userExpression = "0";
+};
+
+const clearBtn = document.querySelector("#clear");
+clearBtn.addEventListener("click", clear);
+
+//backspace function
+const del = function () {
+  expression.innerText = userExpression.slice(0, userExpression.length - 1);
+  userExpression = expression.innerText;
+};
+
+const delBtn = document.querySelector("#backspace");
+delBtn.addEventListener("click", del);
