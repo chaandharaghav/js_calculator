@@ -26,10 +26,24 @@ const numberValues = [...numbers].map((number) => number.dataset.value);
 const operators = document.querySelectorAll(".operators");
 const operatorValues = [...operators].map((number) => number.dataset.value);
 
+// dot
+const dot = document.querySelector("#dot");
+
 // numbers + operators
-const inputs = [...numbers, ...operators];
+const inputs = [...numbers, ...operators, dot];
 
 let userExpression = "0";
+
+const findPrevOperator = function (index) {
+  index = index ?? userExpression.length - 1;
+  console.log(index);
+  for (let i = index - 1; i > -1; i--) {
+    if (operatorValues.includes(userExpression[i])) {
+      return i;
+    }
+  }
+  return 0;
+};
 
 let twoOperatorsPresent = false;
 const changeDisplay = function (input) {
@@ -43,11 +57,28 @@ const changeDisplay = function (input) {
     }
   }
 
-  // if a minus comes after multiplication or division, allow
+  // if a minus comes after multiplication or division or percent, allow,
+  // similarly allow if minus or multiplication comes after percent, allow
   if (operatorValues.includes(currentValue) && operatorValues.includes(input)) {
-    if (!((currentValue === "*" || currentValue === "/") && input === "-")) {
+    if (currentValue === "%") {
+      if (operatorValues.includes(input) && ["/", "+", "%"].includes(input)) {
+        return "";
+      }
+    } else if (
+      !(
+        (currentValue === "*" ||
+          currentValue === "/" ||
+          currentValue === "%") &&
+        input === "-"
+      )
+    ) {
       return "";
     }
+  }
+
+  // if a number/dot comes after percent, automatically add multiplication
+  if (currentValue === "%" && [...numberValues, "."].includes(input)) {
+    userExpression += "*";
   }
 
   userExpression += input;
