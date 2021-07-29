@@ -6,15 +6,17 @@ const removeTransition = function (e) {
   e.target.classList.remove("clicked");
 };
 
-for (let button of buttons) {
+const playAudio = function () {
   const audio = new Audio("click.wav");
+  audio.play();
+  audio.currentTime = 0;
+};
 
+for (let button of buttons) {
   button.addEventListener("click", function () {
-    audio.play();
-    audio.currentTime = 0;
+    playAudio();
     button.classList.add("clicked");
   });
-
   button.addEventListener("transitionend", removeTransition);
 }
 
@@ -247,9 +249,9 @@ const evaluate = function () {
     let first = findFirstInput(current);
     let second = findSecondInput(current);
 
-    console.log(`${first}${userExpression[current]}${second}`);
+    // console.log(`${first}${userExpression[current]}${second}`);
 
-    console.log("Result: " + findResult(first, second, current));
+    // console.log("Result: " + findResult(first, second, current));
 
     userExpression = userExpression.replace(
       `${first}${userExpression[current]}${second}`,
@@ -263,4 +265,23 @@ const equals = document.querySelector("#equals");
 equals.addEventListener("click", function () {
   evaluate();
   result.innerText = userExpression;
+});
+
+window.addEventListener("keyup", function (e) {
+  let key = e.key;
+  playAudio();
+
+  // numbers
+  if ((key >= 0 && key <= 9) || key === ".") {
+    changeDisplay(key);
+  } else if (operatorValues.includes(key)) {
+    changeDisplay(key);
+  } else if (key === "Backspace") {
+    del();
+  } else if (key === "Enter") {
+    evaluate();
+    result.innerText = userExpression;
+  } else if (key === "Delete") {
+    clear();
+  }
 });
